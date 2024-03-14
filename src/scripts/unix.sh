@@ -82,10 +82,10 @@ get() {
   shift 3
   links=("$@")
   if [ "$mode" = "-s" ]; then
-    sudo curl "${curl_opts[@]}" "${links[0]}"
+    sudo -E curl "${curl_opts[@]}" "${links[0]}"
   else
     for link in "${links[@]}"; do
-      status_code=$(sudo curl -w "%{http_code}" -o "$file_path" "${curl_opts[@]}" "$link")
+      status_code=$(sudo -E curl -w "%{http_code}" -o "$file_path" "${curl_opts[@]}" "$link")
       [ "$status_code" = "200" ] && break
     done
     [ "$execute" = "-e" ] && sudo chmod a+x "$file_path"
